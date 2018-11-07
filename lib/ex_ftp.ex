@@ -199,8 +199,18 @@ defmodule ExFtp do
   delete a file
   will return :ok or {:error, reason}
   """
-  def delete({:ftp, pid}, filename) do
+  def rm({:ftp, pid}, filename) do
     result = :ftp.delete(pid, filename |> String.to_charlist())
+    result
+  end
+
+  @doc """
+  delete a file
+  will return :ok or {:error, reason}
+  it will return :ok even if the folder do not exists
+  """
+  def rm_rf({:ftp, pid}, path) do
+    result = :ftp.rmdir(pid, path |> String.to_charlist())
     result
   end
 
